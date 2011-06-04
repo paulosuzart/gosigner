@@ -73,11 +73,3 @@ App.Controllers.Signatures = Backbone.Controller.extend({
 $(function() {
     App.init()
 });
-/*
-$.get('/sign', {
-    'key': 123456,
-    'content': 'Paulo'
-},
-function(result) {
-    alert(result.Signature);
-});*/
