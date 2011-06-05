@@ -26,17 +26,9 @@ App.Views.Index = Backbone.View.extend({
     },
 
     render: function() {
-        var out = "<form class='sandbar-form'>";
-        out += "<div class='field-label'>Content</div>";
-        out += "<input class='textfield' type='text' name='Content' value='<%= model.get('Content') || ''%>'/>";
-        out += "<div class='field-label'>Key</div>";
-        out += "<input class='textfield' type='text' name='Key' value='<%= model.get('Key') || ''%>'/>";
-        out += "<div class='buttons'><button class='sandbar-button'>Sign</button></div>";
-        out += "<label>Signature: <%= model.get('Signature') || '' %></label</form>"
-        var compiled = _.template(out);
-        $(this.el).html(compiled({
-            model: this.model
-        }));
+        
+        var compiled = _.template($('#index_template').html(), {model : this.model});
+        $(this.el).html(compiled);
         $("#sandbar-form").html(this.el);
     },
 
