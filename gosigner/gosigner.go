@@ -18,6 +18,7 @@ type Signature struct {
 type Version struct{
         Version string
 }
+// Signs the Content
 func signHandler(w http.ResponseWriter, r *http.Request) {
 	dec := json.NewDecoder(r.Body)
         var data Signature
@@ -35,6 +36,7 @@ func signHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 
+//Used to get the current version of the app
 func versionHandler(w http.ResponseWriter, r *http.Request){
         json.NewEncoder(w).Encode(&Version{version})
 }        

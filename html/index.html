@@ -9,6 +9,8 @@
         <link rel='stylesheet' type='text/css' href='/static/css/sandbar-forms.css'>
         <link rel='stylesheet' type='text/css' href='/static/css/sandbar.css'>
         <script type='text/template' id='index_template'>
+                
+                <a href="#/about" id="about">about</a>
                 <div class='sandbar-form'>
                 <form>
                         <div class='field-label'>Content</div>
@@ -27,15 +29,17 @@
                 </div>
         </script>
         <script type='text/template' id='about_template'>
-                <div class='message'><p>A simple Go program to sign any content with a given key.
+                <a href="" id="index">home</a>
+                <div class='message'>
+                        <p>Gosigner: version <i><%= version %></i>.</p>
+                        <p>A simple Go program to sign any content with a given key.
                 It uses HMAC SHA1 for signatures.</p>
-                <p>version <%= version %></p>
-                <p>Follow me <a href='http://twitter.com/paulosuzart'>@paulosuzart</a></p>
+                        <p>Follow me <a href='http://twitter.com/paulosuzart'>@paulosuzart</a></p>
+                </div>
         </script>
 
 </head>
 <body>
-        <a href="#about" id="about">about</a>
         <div id="sandbar-form"/>
 </body>
 </html>

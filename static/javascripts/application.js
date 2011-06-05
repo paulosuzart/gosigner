@@ -56,7 +56,7 @@ App.Views.Index = Backbone.View.extend({
 App.Controllers.Signatures = Backbone.Controller.extend({
     routes: {
         "": "index",
-        "about" : "about"
+        "/about" : "about"
     },
 
     index: function() {
@@ -69,7 +69,7 @@ App.Controllers.Signatures = Backbone.Controller.extend({
         $.get('/ver', function(data){
                 var compiled = _.template($('#about_template').html(), {version : data.Version});
                 $("#sandbar-form").html(compiled);
-                Backbone.history.saveLocation('about');
+                Backbone.history.saveLocation('/about');
         }, "json");
     }
 });
