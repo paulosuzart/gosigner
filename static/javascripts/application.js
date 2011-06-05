@@ -16,7 +16,7 @@ var App = {
 
 App.Views.Index = Backbone.View.extend({
     events: {
-        "submit form": "sign"
+        "submit form" : "sign",
     },
 
     initialize: function() {
@@ -49,19 +49,28 @@ App.Views.Index = Backbone.View.extend({
             }
         });
         return false;
-    }
+    },
 });
 
 
 App.Controllers.Signatures = Backbone.Controller.extend({
     routes: {
-        "": "index"
+        "": "index",
+        "about" : "about"
     },
 
     index: function() {
         new App.Views.Index({
             model: new Signature()
         });
+    },
+
+    about : function() {
+        $.get('/ver', function(data){
+                var compiled = _.template($('#about_template').html(), {version : data.Version});
+                $("#sandbar-form").html(compiled);
+                Backbone.history.saveLocation('about');
+        }, "json");
     }
 });
 

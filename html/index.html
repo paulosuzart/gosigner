@@ -1,3 +1,4 @@
+<!DOCTYPE HTML SYSTEM>
 <html>
 <head>
 	<title>Gosigner. A simple HMA SHA1 Signer</title>
@@ -8,7 +9,8 @@
         <link rel='stylesheet' type='text/css' href='/static/css/sandbar-forms.css'>
         <link rel='stylesheet' type='text/css' href='/static/css/sandbar.css'>
         <script type='text/template' id='index_template'>
-                <form class='sandbar-form'>
+                <div class='sandbar-form'>
+                <form>
                         <div class='field-label'>Content</div>
                         <div class='textfield'>
                                 <input type='text' name='Content' value='<%= model.get('Content') || ''%>'/>
@@ -22,11 +24,18 @@
                         </div>
                         <label>Signature: <%= model.get('Signature') || '' %></label>
                 </form>
+                </div>
         </script>
-
+        <script type='text/template' id='about_template'>
+                <div class='message'><p>A simple Go program to sign any content with a given key.
+                It uses HMAC SHA1 for signatures.</p>
+                <p>version <%= version %></p>
+                <p>Follow me <a href='http://twitter.com/paulosuzart'>@paulosuzart</a></p>
+        </script>
 
 </head>
 <body>
-        <div id="sandbar-form" class="sandbar-form"/>
+        <a href="#about" id="about">about</a>
+        <div id="sandbar-form"/>
 </body>
 </html>

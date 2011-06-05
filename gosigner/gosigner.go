@@ -7,10 +7,17 @@ import (
 	"encoding/base64"
 )
 
+const (
+        version = "0.0.1"
+)
+
 type Signature struct {
 	Signature, Content, Key string
 }
 
+type Version struct{
+        Version string
+}
 func signHandler(w http.ResponseWriter, r *http.Request) {
 	dec := json.NewDecoder(r.Body)
         var data Signature
@@ -27,6 +34,11 @@ func signHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(&Signature{string(out), content, data.Key})
 }
 
+
+func versionHandler(w http.ResponseWriter, r *http.Request){
+        json.NewEncoder(w).Encode(&Version{version})
+}        
 func init() {
-	http.HandleFunc("/sign", signHandler)
+	http.HandleFunc("/ver", versionHandler)
+        http.HandleFunc("/sign", signHandler)
 }

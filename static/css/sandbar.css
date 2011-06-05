@@ -18,24 +18,20 @@ div.error, div.message, div.warning, div.help {
 
 /* use a different color for the errors */
 div.error {
-   background: #ffffcc url(../images/error.png) no-repeat 3px 3px;
    padding-left: 22px;
    border: 1px solid red;
 }
 
 div.warning {
-   background: #ffffcc url(../images/warning.png) no-repeat 3px 3px;
    padding-left: 22px;
    border: 1px solid yellow;
 }
 
 div.message {
-   background: #ffffcc url(../images/about.png) no-repeat 3px 3px;
    padding-left: 22px;
 }
 
 div.help {
-   background: #ffffcc url(../images/help.png) no-repeat 3px 3px;
    padding-left: 22px;
 }
 
