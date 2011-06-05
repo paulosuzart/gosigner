@@ -5,9 +5,6 @@ import (
 	"crypto/hmac"
 	"json"
 	"encoding/base64"
-//	"template"
-        //"strings"
-        //"log"
 )
 
 type Signature struct {
