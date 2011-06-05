@@ -77,5 +77,3 @@ App.Controllers.Signatures = Backbone.Controller.extend({
 $(function() {
     App.init()
 });
-
-window.JST
