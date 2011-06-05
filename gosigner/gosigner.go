@@ -6,10 +6,14 @@ import (
 	"json"
 	"encoding/base64"
 	"template"
+        "os"
+        "strings"
+        "log"
 )
 
 var (
         indexTemplate = template.MustParseFile("index.html", nil)
+        indexJST   *template.Template
 )
 type Signature struct {
 	Signature, Content, Key string
@@ -30,15 +34,35 @@ func signHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(&Signature{string(out), content, data.Key})
 }
-
+type JSTTemplate struct{
+        Template string
+}
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-	indexTemplate.Execute(w, 1)
-
+	sw := new(StringWritter)
+        indexJST := template.New(nil)
+        //indexJST.SetDelims("{","}")
+        if err := indexJST.ParseFile("index.jst"); err != nil {
+                panic("Unable to parse template")
+        }
+        indexJST.Execute(sw, nil)
+        log.Print(sw.s)
+        indexTemplate.Execute(w, &JSTTemplate{strings.Replace(sw.s, "\n", "" , -1)})
 }
 
 func init() {
-        
 	//Add singHandler as handler of /sign
 	http.HandleFunc("/sign", signHandler)
         http.HandleFunc("/", indexHandler)
 }
+
+
+type StringWritter struct {
+	s string
+}
+
+//Writes the template as string
+func (self *StringWritter) Write(p []byte) (n int, err os.Error) {
+	self.s += string(p)
+	return len(self.s), nil
+}
+

@@ -1,7 +1,7 @@
 var Signature = Backbone.Model.extend({
     url: function() {
-            var base = "sign";
-            return base;
+        var base = "sign";
+        return base;
     }
 });
 
@@ -22,21 +22,22 @@ App.Views.Index = Backbone.View.extend({
     initialize: function() {
         _.bindAll(this, 'render');
         this.model.bind('change', this.render);
-            this.render();
+        this.render();
     },
 
     render: function() {
-        var out = "<form><label for='Content'>Content</label>";
-        out += "<input type='text' name='Content' value='<%= model.get('Content') || ''%>'/>";
-        out += "<label for='Key'>Key</label>";
-        out += "<input type='text' name='Key' value='<%= model.get('Key') || ''%>'/>";
-        out += "<button>Sign</button>";
+        var out = "<form class='sandbar-form'>";
+        out += "<div class='field-label'>Content</div>";
+        out += "<input class='textfield' type='text' name='Content' value='<%= model.get('Content') || ''%>'/>";
+        out += "<div class='field-label'>Key</div>";
+        out += "<input class='textfield' type='text' name='Key' value='<%= model.get('Key') || ''%>'/>";
+        out += "<div class='buttons'><button class='sandbar-button'>Sign</button></div>";
         out += "<label>Signature: <%= model.get('Signature') || '' %></label</form>"
         var compiled = _.template(out);
         $(this.el).html(compiled({
             model: this.model
         }));
-        $("#result").html(this.el);
+        $("#sandbar-form").html(this.el);
     },
 
     sign: function() {
@@ -51,8 +52,8 @@ App.Views.Index = Backbone.View.extend({
                 self.render();
                 self.delegateEvents();
             },
-            error : function(){
-                    alert('Failed to sign.');
+            error: function() {
+                alert('Failed to sign.');
             }
         });
         return false;
@@ -66,10 +67,14 @@ App.Controllers.Signatures = Backbone.Controller.extend({
     },
 
     index: function() {
-        new App.Views.Index({model : new Signature()});
+        new App.Views.Index({
+            model: new Signature()
+        });
     }
 });
 
 $(function() {
     App.init()
 });
+
+window.JST
