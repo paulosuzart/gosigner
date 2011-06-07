@@ -2,6 +2,14 @@ var Signature = Backbone.Model.extend({
     url: function() {
         var base = "sign";
         return base;
+    },
+    validate: function(attrs){
+        if (_(attrs.Content).trim().length == 0) {
+                return "You should put some conent to be signed :)."
+        }
+        if ((attrs.Key).trim().length == 0) {
+                return "Where is the Key to sign?"
+        }
     }
 });
 
@@ -17,8 +25,13 @@ var App = {
 App.Views.Index = Backbone.View.extend({
     events: {
         "submit form" : "sign",
+        "click [name=Content]" : "clear" 
     },
 
+    clear: function(){
+      $("#sign").css('visibility','hidden');      
+    },
+    
     initialize: function() {
         _.bindAll(this, 'render');
         this.model.bind('change', this.render);
@@ -42,10 +55,15 @@ App.Views.Index = Backbone.View.extend({
             success: function(model, resp) {
                 self.model = model;
                 self.render();
+                $("#sign").css('visibility', 'visible');
                 self.delegateEvents();
             },
-            error: function() {
-                alert('Failed to sign.');
+            error: function(self, error) {
+                if (error) {
+                        alert(error);
+                } else {
+                        alert('Failed to sign.');
+                }
             }
         });
         return false;

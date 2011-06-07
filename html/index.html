@@ -1,30 +1,33 @@
 <!DOCTYPE HTML SYSTEM>
 <html>
 <head>
-	<title>Gosigner. A simple HMA SHA1 Signer</title>
+	<title>Gosigner. A simple HMAC SHA1 Signer</title>
         <script type='text/javascript' src='/static/javascripts/jquery-1.6.1.js'></script>
         <script type='text/javascript' src='/static/javascripts/underscore.js'></script>
+        <script type='text/javascript' src='/static/javascripts/underscore.string.min.js'></script>
         <script type='text/javascript' src='/static/javascripts/backbone.js'></script>
         <script type='text/javascript' src='/static/javascripts/application.js'></script>
         <link rel='stylesheet' type='text/css' href='/static/css/sandbar-forms.css'>
         <link rel='stylesheet' type='text/css' href='/static/css/sandbar.css'>
         <script type='text/template' id='index_template'>
-                
-                <a href="#/about" id="about">about</a>
                 <div class='sandbar-form'>
+                <a href="#/about" id="about" style='text-align: left;'>about</a>
+                <div class='form-title'>GoSign</div>
                 <form>
-                        <div class='field-label'>Content</div>
-                        <div class='textfield'>
-                                <input type='text' name='Content' value='<%= model.get('Content') || ''%>'/>
+                        <div class='field-label'>Content to be signed:</div>
+                        <div>
+                                <textarea  rows='10' name='Content'><%= model.get('Content') || ''%></textarea>
                         </div>
-                        <div class='field-label'>Key</div>
-                        <div class='textfield'>
-                                <input type='text' name='Key' value='<%= model.get('Key') || ''%>'/>
+                        <div class='field-label'>Signing Key:</div>
+                        <div> 
+                                <input class='textfield' type='text' name='Key' value='<%= model.get('Key') || ''%>'/>
                         </div>
                         <div class='buttons'>
                                 <button class='sandbar-button'>Sign</button>
                         </div>
+                        <div id='sign'  style='visibility: hidden;'>
                         <label>Signature: <%= model.get('Signature') || '' %></label>
+                        </div>
                 </form>
                 </div>
         </script>
