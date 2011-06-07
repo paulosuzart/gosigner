@@ -40,6 +40,7 @@ func signHandler(w http.ResponseWriter, r *http.Request) {
 func versionHandler(w http.ResponseWriter, r *http.Request){
         json.NewEncoder(w).Encode(&Version{version})
 }        
+
 func init() {
 	http.HandleFunc("/ver", versionHandler)
         http.HandleFunc("/sign", signHandler)
