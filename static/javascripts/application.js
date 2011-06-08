@@ -1,6 +1,6 @@
 var Signature = Backbone.Model.extend({
     url: function() {
-        var base = "sign";
+        var base = "api/sign";
         return base;
     },
     validate: function(attrs){
@@ -11,6 +11,19 @@ var Signature = Backbone.Model.extend({
                 return "Where is the Key to sign?"
         }
     }
+});
+
+var Key = Backbone.Model.extend({
+        url: function(){
+                var base = "api/key";
+                if(this.isNew()) return base;
+                return base + (base.charAt(base.length - 1) == '/' ? '' : '/') + this.id;
+        }
+});
+
+var Keys = Backbone.Collection.extend({
+        model: Key,
+        url : "api/keys"
 });
 
 var App = {
@@ -84,7 +97,7 @@ App.Controllers.Signatures = Backbone.Controller.extend({
     },
 
     about : function() {
-        $.get('/ver', function(data){
+        $.get('/api/ver', function(data){
                 var compiled = _.template($('#about_template').html(), {version : data.Version});
                 $("#sandbar-form").html(compiled);
                 Backbone.history.saveLocation('/about');

@@ -5,8 +5,8 @@ import (
 	"crypto/hmac"
 	"json"
 	"encoding/base64"
-        "appengine"
-        "appengine/user"
+	"appengine"
+	"appengine/user"
 )
 
 const (
@@ -43,59 +43,82 @@ func versionHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(&Version{version})
 }
 
-func indexHandler(w http.ResponseWriter, r *http.Request){
-        c := appengine.NewContext(r)
-        u := user.Current(c)
-        if u == nil {
-                url, err := user.LoginURL(c, r.URL.String())
-                if err != nil {
-                        http.Error(w, err.String(), http.StatusInternalServerError)
-                        return
-                }
-                w.Header().Set("Location", url)
-                w.WriteHeader(http.StatusFound)
-                return
-        }
-}        
+func indexHandler(w http.ResponseWriter, r *http.Request) {
+	c := appengine.NewContext(r)
+	u := user.Current(c)
+	if u == nil {
+		url, err := user.LoginURL(c, r.URL.String())
+		if err != nil {
+			http.Error(w, err.String(), http.StatusInternalServerError)
+			return
+		}
+		w.Header().Set("Location", url)
+		w.WriteHeader(http.StatusFound)
+		return
+	}
+}
 
 func auth(h http.HandlerFunc) http.HandlerFunc {
-        return func(w http.ResponseWriter, r *http.Request) {
-        c := appengine.NewContext(r)
-        u := user.Current(c)
-        if u == nil {
-                url, err := user.LoginURL(c, r.URL.String())
-                if err != nil {
-                        http.Error(w, err.String(), http.StatusInternalServerError)
-                        return
-                }
-                w.Header().Set("Location", url)
-                w.WriteHeader(http.StatusFound)
-                return
-        }
+	return func(w http.ResponseWriter, r *http.Request) {
+		c := appengine.NewContext(r)
+		u := user.Current(c)
+		if u == nil {
+			url, err := user.LoginURL(c, r.URL.String())
+			if err != nil {
+				http.Error(w, err.String(), http.StatusInternalServerError)
+				return
+			}
+			w.Header().Set("Location", url)
+			w.WriteHeader(http.StatusFound)
+			return
+		}
 
-                h(w, r)
-        }
+		h(w, r)
+	}
 }
-        
+
 func keyHandler(w http.ResponseWriter, r *http.Request) {
-        c := appengine.NewContext(r)
-        var data Key
-                json.NewDecoder(r.Body).Decode(&data)
-                data.Save(c)        
+	c := appengine.NewContext(r)
+	var data Key
+	json.NewDecoder(r.Body).Decode(&data)
+	data.Save(c)
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(data)
+}
+
+
+func keysHandler(w http.ResponseWriter, r *http.Request) {
+	c := appengine.NewContext(r)
+	owner := user.Current(c).Email
+	if owner == "" {
+		owner = "paulosuzart@gmail.com"
+	}
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(AllKeys(c, owner))
 }
 
 func POST(h http.HandlerFunc) http.HandlerFunc {
-        return func(w http.ResponseWriter, r *http.Request){
-                if r.Method != "POST" {
-                        http.Error(w, "Only GET allowed", http.StatusMethodNotAllowed)
-                }
-                h(w, r)
-        }        
+	return func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != "POST" {
+			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		}
+		h(w, r)
+	}
+}
+
+func GET(h http.HandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != "GET" {
+			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		}
+		h(w, r)
+	}
 }
 
 func init() {
-	http.HandleFunc("/key", POST(keyHandler))
-        http.HandleFunc("/enter", indexHandler)
-        http.HandleFunc("/ver", versionHandler)
-	http.HandleFunc("/sign", signHandler)
+	http.HandleFunc("/api/key", POST(keyHandler))
+	http.HandleFunc("/api/keys", GET(keysHandler))
+	http.HandleFunc("/enter", indexHandler)
+	http.HandleFunc("/api/ver", versionHandler)
+	http.HandleFunc("/api/sign", signHandler)
 }
