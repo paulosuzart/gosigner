@@ -18,9 +18,11 @@ type Key struct {
 
 func (self *Key) Save(c appengine.Context) (*datastore.Key, os.Error) {
 	self.Created = datastore.SecondsToTime(time.Seconds())
-	self.Owner = user.Current(c).Email
-	if self.Owner == "" {
-		self.Owner = "paulosuzart@gmail.com"
+	u := user.Current(c)
+	if u == nil {
+		self.Owner = "test@example.com"
+	} else {
+		self.Owner = u.Email
 	}
 	key, err := datastore.Put(c, datastore.NewIncompleteKey("key"), self)
 	if err != nil {
@@ -40,7 +42,7 @@ func iterateKeys(it *datastore.Iterator) []Key {
 			break
 		}
 		if err != nil {
-			return []Key{}
+			return keys
 		}
 		keys = append(keys, key)
 	}

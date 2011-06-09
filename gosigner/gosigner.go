@@ -7,6 +7,7 @@ import (
 	"encoding/base64"
 	"appengine"
 	"appengine/user"
+	"log"
 )
 
 const (
@@ -72,6 +73,7 @@ func auth(h http.HandlerFunc) http.HandlerFunc {
 			w.WriteHeader(http.StatusFound)
 			return
 		}
+		log.Printf("User %s logged.", u.Email)
 
 		h(w, r)
 	}
@@ -89,9 +91,12 @@ func keyHandler(w http.ResponseWriter, r *http.Request) {
 
 func keysHandler(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
-	owner := user.Current(c).Email
-	if owner == "" {
-		owner = "paulosuzart@gmail.com"
+	u := user.Current(c)
+	var owner string
+	if u == nil {
+		owner = "test@example.com"
+	} else {
+		owner = u.Email
 	}
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(AllKeys(c, owner))
@@ -118,7 +123,7 @@ func GET(h http.HandlerFunc) http.HandlerFunc {
 func init() {
 	http.HandleFunc("/api/key", POST(keyHandler))
 	http.HandleFunc("/api/keys", GET(keysHandler))
-	http.HandleFunc("/enter", indexHandler)
+	http.HandleFunc("/api/enter", auth(indexHandler))
 	http.HandleFunc("/api/ver", versionHandler)
 	http.HandleFunc("/api/sign", signHandler)
 }
