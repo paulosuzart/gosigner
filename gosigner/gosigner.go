@@ -33,21 +33,15 @@ func signHandler(c sugo.Context) {
 }
 
 func init() {
-
-	signResource := &sugo.Resource{
-		Accepts: "application/json",
-		Renders: "application/json",
-		POST:     &sugo.Path{"/api/sign", signHandler},
-	}
+        sugo.Make("/") 
+	sugo.Add(&sugo.Resource{
+                        POST:     &sugo.Path{"/api/sign", signHandler},
+        })
         
-        versionResource := &sugo.Resource{
-                Renders: "application/json",
-                GET : &sugo.Path{"/api/ver", func(c sugo.Context) {
+        sugo.Add(&sugo.Resource{
+                        GET : &sugo.Path{"/api/ver", func(c sugo.Context) {
                                                 c.Render(&Version{version})
                                             }},
-        }
-        sugo.Make("/") 
-	sugo.Add(signResource)
-        sugo.Add(versionResource)
+        })
         sugo.Start()
 }

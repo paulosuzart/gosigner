@@ -66,10 +66,13 @@ func (self *Context) RenderJSON(data interface{}) {
 
 //Renders the result based on Resouce.Renders attribute
 func (self *Context) Render(data interface{}) {
-	self.w.Header().Set("Content-Type", self.resource.Renders)
 	if self.resource.Renders == "application/json" {
-		json.NewEncoder(self.w).Encode(data)
+               self.RenderJSON(data) 
+               return 
 	}
+        //default is json
+        self.RenderJSON(data)
+        
 }
 
 //The SuGo struct that holds the root context (usually '/')
