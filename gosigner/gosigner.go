@@ -3,6 +3,7 @@ package gosigner
 import (
 	"crypto/hmac"
 	"encoding/base64"
+        "sugo"
 )
 
 const (
@@ -17,7 +18,7 @@ type Version struct{
         Version string
 }
 
-func signHandler(c Context) {
+func signHandler(c sugo.Context) {
 	var data Signature
 	c.ReadJSON(&data)
 	keyBytes := []byte(data.Key)
@@ -33,20 +34,20 @@ func signHandler(c Context) {
 
 func init() {
 
-	signResource := &Resource{
+	signResource := &sugo.Resource{
 		Accepts: "application/json",
 		Renders: "application/json",
-		POST:     &Path{"/api/sign", signHandler},
+		POST:     &sugo.Path{"/api/sign", signHandler},
 	}
         
-        versionResource := &Resource{
+        versionResource := &sugo.Resource{
                 Renders: "application/json",
-                GET : &Path{"/api/ver", func(c Context) {
+                GET : &sugo.Path{"/api/ver", func(c sugo.Context) {
                                                 c.Render(&Version{version})
                                             }},
         }
-        MakeSuGo("/") 
-	Add(signResource)
-        Add(versionResource)
-        Start()
+        sugo.Make("/") 
+	sugo.Add(signResource)
+        sugo.Add(versionResource)
+        sugo.Start()
 }

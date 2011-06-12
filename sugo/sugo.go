@@ -1,4 +1,4 @@
-package gosigner
+package sugo 
 
 import (
 	"appengine"
@@ -20,8 +20,8 @@ type Context struct {
 }
 
 type Path struct {
-	pattern string
-	handler SuGoHandler
+	Pattern string
+	Handler SuGoHandler
 }
 
 type SuGoHandler func(c Context)
@@ -30,10 +30,10 @@ var _sugo *SuGo
         
 func  Add(r *Resource) {
 	if r.GET != nil {
-		_sugo.routes[r.GET.pattern] = r
+		_sugo.routes[r.GET.Pattern] = r
 	}
 	if r.POST != nil {
-		_sugo.routes[r.POST.pattern] = r
+		_sugo.routes[r.POST.Pattern] = r
 	}
 }
 
@@ -60,7 +60,7 @@ type SuGo struct {
         routes map[string]*Resource
 }
 
-func MakeSuGo(root string) {
+func Make(root string) {
         _sugo = &SuGo{root, map[string]*Resource{}}
 }
 
@@ -78,9 +78,9 @@ func httpHandler(w http.ResponseWriter, r *http.Request) {
 	ctx.resource = resource
 	switch r.Method {
 	case "GET":
-		resource.GET.handler(ctx)
+		resource.GET.Handler(ctx)
 	case "POST":
-		resource.POST.handler(ctx)
+		resource.POST.Handler(ctx)
 	}
 }
 func (self *SuGo) findHandler(path string) *Resource {
