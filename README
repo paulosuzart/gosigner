@@ -1,4 +1,6 @@
 Sample app to run o GAE golang runtime.
 
-Just playing with backbone.js and underscore.js templates.
-The app runs without any Go template. That is, htmls are server directly by GAE runtime and backbone.js is responsible to make things work with the server.
+Just playing with knockout.js.
+The app runs without any Go template. That is, htmls are served directly by GAE runtime and knockout.js is responsible to make things work with the server.
+
+The las commit uses knockout.js. To see the version usin backbone.js refer to old commits.
