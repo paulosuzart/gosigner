@@ -2,31 +2,36 @@
 <html>
 <head>
 	<title>Gosigner. A simple HMAC SHA1 Signer</title>
+        <link rel='stylesheet' type='text/css' href='/static/css/sandbar-forms.css'>
+        <link rel='stylesheet' type='text/css' href='/static/css/sandbar.css'>
         <script type='text/javascript' src='/static/javascripts/jquery-1.6.1.js'></script>
+<!--
         <script type='text/javascript' src='/static/javascripts/underscore.js'></script>
         <script type='text/javascript' src='/static/javascripts/underscore.string.min.js'></script>
         <script type='text/javascript' src='/static/javascripts/backbone.js'></script>
-        <script type='text/javascript' src='/static/javascripts/application.js'></script>
-        <link rel='stylesheet' type='text/css' href='/static/css/sandbar-forms.css'>
-        <link rel='stylesheet' type='text/css' href='/static/css/sandbar.css'>
-        <script type='text/template' id='index_template'>
+        <script type='text/javascript' src='/static/javascripts/application.js'></script> -->
+        <script type='text/javascript' src='/static/javascripts/jquery.tmpl.js'></script>
+        <script type='text/javascript' src='/static/javascripts/knockout-1.2.1.js'></script>
+        <script type='text/javascript' src='/static/javascripts/knockout.mapping-latest.js'></script>
+        <script type='text/javascript' src='/static/javascripts/gosigner-master.js'></script>
+        <script type='text/html' id='index_template' >
                 <div class='sandbar-form'>
                 <a href="#/about" id="about" style='text-align: left;'>about</a>
                 <div class='form-title'>GoSign</div>
                 <form>
                         <div class='field-label'>Content to be signed:</div>
                         <div>
-                                <textarea  rows='10' name='Content'><%= model.get('Content') || ''%></textarea>
+                                <textarea  rows='10' name='Content' data-bind='value : Content'></textarea>
                         </div>
                         <div class='field-label'>Signing Key:</div>
                         <div> 
-                                <input class='textfield' type='text' name='Key' value='<%= model.get('Key') || ''%>'/>
+                                <input class='textfield' type='text' name='Key' data-bind='value : Key'/>
                         </div>
                         <div class='buttons'>
-                                <button class='sandbar-button'>Sign</button>
+                                <button class='sandbar-button' data-bind='click : sign'>Sign</button>
                         </div>
                         <div id='sign'  style='visibility: hidden;'>
-                        <label>Signature: <%= model.get('Signature') || '' %></label>
+                        <label>Signature: ${Signature}</label>
                         </div>
                 </form>
                 </div>
@@ -43,6 +48,6 @@
 
 </head>
 <body>
-        <div id="sandbar-form"/>
+        <div id="sandbar-form" data-bind='template : "index_template"'></div>
 </body>
 </html>
