@@ -5,18 +5,13 @@
         <link rel='stylesheet' type='text/css' href='/static/css/sandbar-forms.css'>
         <link rel='stylesheet' type='text/css' href='/static/css/sandbar.css'>
         <script type='text/javascript' src='/static/javascripts/jquery-1.6.1.js'></script>
-<!--
-        <script type='text/javascript' src='/static/javascripts/underscore.js'></script>
-        <script type='text/javascript' src='/static/javascripts/underscore.string.min.js'></script>
-        <script type='text/javascript' src='/static/javascripts/backbone.js'></script>
-        <script type='text/javascript' src='/static/javascripts/application.js'></script> -->
         <script type='text/javascript' src='/static/javascripts/jquery.tmpl.js'></script>
         <script type='text/javascript' src='/static/javascripts/knockout-1.2.1.js'></script>
         <script type='text/javascript' src='/static/javascripts/knockout.mapping-latest.js'></script>
         <script type='text/javascript' src='/static/javascripts/gosigner-master.js'></script>
-        <script type='text/html' id='index_template' >
+        <script type='text/html' id='index_template'>
                 <div class='sandbar-form'>
-                <a href="#/about" id="about" style='text-align: left;'>about</a>
+                <a href="about" id="about" style='text-align: left;'>about</a>
                 <div class='form-title'>GoSign</div>
                 <form>
                         <div class='field-label'>Content to be signed:</div>
@@ -36,16 +31,7 @@
                 </form>
                 </div>
         </script>
-        <script type='text/template' id='about_template'>
-                <a href="" id="index">home</a>
-                <div class='message'>
-                        <p>Gosigner: version <i><%= version %></i>. <a href='https://github.com/paulosuzart/gosigner' target='new'>Source here</a>. </p>
-                        <p>A simple Go program to sign any content with a given key.
-                It uses HMAC SHA1 for signatures.</p>
-                        <p>Follow me <a href='http://twitter.com/paulosuzart'>@paulosuzart</a></p>
-                </div>
-        </script>
-
+        
 </head>
 <body>
         <div id="sandbar-form" data-bind='template : "index_template"'></div>

@@ -9,20 +9,9 @@ var signView = {
                    ko.mapping.fromJS(data, {}, signView); 
                    $("#sign").css('visibility', 'visible');
                 });
-    },
+    }
 };
-/**
-var App = { signView : signView, 
-            aboutView : aboutView,
-            about : false,
-            display : function(about) {
-              return about? "index_template" : "about_template";  
-            },
-            about : function(){
-                App.about = true;
-            }
-        }
-*/
+
 $(function(){
-    ko.applyBindings(signView, document.getElementById('sandbar-form'));  
+    ko.applyBindings(signView);
 });

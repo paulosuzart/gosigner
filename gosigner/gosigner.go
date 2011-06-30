@@ -7,17 +7,11 @@ import (
 	"encoding/base64"
 )
 
-const (
-        version = "0.0.1"
-)
 
 type Signature struct {
 	Signature, Content, Key string
 }
 
-type Version struct{
-        Version string
-}
 // Signs the Content
 func signHandler(w http.ResponseWriter, r *http.Request) {
 	dec := json.NewDecoder(r.Body)
@@ -36,12 +30,7 @@ func signHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 
-//Used to get the current version of the app
-func versionHandler(w http.ResponseWriter, r *http.Request){
-        json.NewEncoder(w).Encode(&Version{version})
-}        
 
 func init() {
-	http.HandleFunc("/ver", versionHandler)
         http.HandleFunc("/sign", signHandler)
 }
