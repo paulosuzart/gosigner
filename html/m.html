@@ -1,0 +1,55 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>Page Title</title> 
+            <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0b1/jquery.mobile-1.0b1.min.css" />
+            <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
+            <script type="text/javascript" src="http://code.jquery.com/mobile/1.0b1/jquery.mobile-1.0b1.min.js"></script>
+        <script type='text/javascript' src='/static/javascripts/jquery.tmpl.js'></script>
+        <script type='text/javascript' src='/static/javascripts/knockout-1.2.1.js'></script>
+        <script type='text/javascript' src='/static/javascripts/knockout.mapping-latest.js'></script>
+        <script type='text/javascript' src='/static/javascripts/gosigner-master-m.js'></script>
+
+    </head>
+    <body>
+    <div data-role="page" id="index" data-theme="b">
+            <div data-role="header" data-position="inline">
+                <!-- <a href="#" data-icon="delete">Clear</a> -->
+                <h1>Gosigner</h1>
+                <a href="#about" data-icon="arrow-r">About</a>
+            </div>
+            <div data-role="content" id="main" >
+                <form>
+                    <div data-role="fieldcontain">
+                        <label for='Content'>Content</label>
+                        <textarea  rows='10' name="Content" data-bind='value : Content'></textarea>
+                    </div>
+                    <div data-role="fieldcontain">
+                         <label for='Key'>Key</label>
+                         <input class='textfield' type='text' name='Key' data-bind='value : Key'/>
+                    </div>
+                    <div field-role="fieldcontain">
+                                <button data-bind='click : sign'>Sign</button>
+                    </div>
+                    <div id='sign' >
+                        <label>Signature: <div data-bind='text: Signature'></div></label>
+                    </div>
+                </form>
+            </div>
+    </div>
+    
+<div id='about' data-role="page">
+    <div data-role="header" data-theme="b">
+        <a href="#index" data-icon="arrow-l">Home</a>
+        <h1>Gosigner</h1>
+    </div>
+    <div data-role="content">
+        <p>Gosigner: <i>1.0.2<i>. <a href='https://github.com/paulosuzart/gosigner' target='new'>Source here</a>. </p>
+        <p>A simple Go program to sign any content with a given key.
+                It uses HMAC SHA1 for signatures.</p>
+        <p>Follow me <a href='http://twitter.com/paulosuzart'>@paulosuzart</a></p>
+    </div>
+    
+    </body>
+</html>

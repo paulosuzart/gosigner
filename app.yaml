@@ -14,4 +14,8 @@ handlers:
 - url: /about
   static_files: html/about.html
   upload: html/(.*\.html)
+- url: /m
+  static_files: html/m.html
+  upload: html/(.*\.html)
 
+  
