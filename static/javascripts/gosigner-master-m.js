@@ -1,5 +1,5 @@
 var signView = {
-    Key : ko.observable('Type Here'),
+    Key : ko.observable(''),
     Signature : ko.observable(''),
     Content : ko.observable(''),
     sign : function () {
