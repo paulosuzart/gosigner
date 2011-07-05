@@ -11,7 +11,7 @@ var signView = {
                 });
     }
 };
-
 $(function(){
     ko.applyBindings(signView);
 });
+
